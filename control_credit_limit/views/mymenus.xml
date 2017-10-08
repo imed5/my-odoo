@@ -1,0 +1,37 @@
+<?xml  version="1.0"?>  
+<odoo>  
+	<record	id="sale_order_to_approve"	model="ir.ui.view">	
+		<field	name="name">Orders to Approve : Credit Limit Issues</field>	
+		<field	name="model">sale.order</field>	
+		<field	name="arch"	type="xml">	
+				<tree>
+				    <field name="message_needaction" invisible="1"/>
+				    <field name="name" string="Order Number"/>
+				    <field name="date_order"/>
+				    <field name="partner_id"/>
+				    <field name="user_id"/>
+				    <field name="amount_total" sum="Total Tax Included" widget="monetary"></field>
+				    <field name="credit_limit"  widget="monetary"/>
+				    <field name="customer_balance"  widget="monetary"/>
+				    <field name="currency_id" invisible="1"/>
+				    <field name="invoice_status"  invisible="1"/>
+				    <field name="state" invisible="1"/>
+				</tree>	
+		</field>	
+	</record>
+
+    <act_window  id="action_list_sale_to_approve"  
+        name="Orders to Approve : Credit Limit Issues"  
+        res_model="sale.order"
+	view_id="sale_order_to_approve"
+        view_mode="tree,form" 
+	domain="[('need_approval', '=', True),'|',('state', '=','draft' ),('state', '=','sent' )]"/>  
+    <menuitem  id="menu_list_sale_to_approve"  
+        name="Sale Orders to Approve"  
+        action="action_list_sale_to_approve" 
+        parent="sales_team.menu_sales"
+	groups="sales_team.group_sale_manager"
+        sequence="99" />
+
+
+</odoo> 
