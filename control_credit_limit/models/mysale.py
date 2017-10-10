@@ -39,6 +39,7 @@ class MySale(models.Model):
 			return 1
 
 
+
 	@api.multi
 	def action_confirm(self):
 		_logger.debug(' \n\n \t Calling Action Confirm for a child\n\n\n')		
