@@ -7,13 +7,57 @@
         <field name="type">form</field>
         <field name="inherit_id" ref="account.view_partner_property_form"/>
         <field name="arch" type="xml">
-            <group name="acc_sale" position="after">
-	            <group name="Credit" String="Credit Limit Control" >
-	                <field name="my_credit_limit"/>
-        	        <field name="my_credit_agent_change"/>
-		     </group>
-            </group>
+		<page name="accounting" position="after">
+			 <page string="Credit Limit" name="credit_limit">
+				<group name="Credit" String="Credit Limit Control" >
+					<field name="check_credit_limit" attrs="{'readonly':True}" />
+					<field name="my_credit_limit" attrs="{'readonly':True}" />
+					<field name="my_credit_agent_change" attrs="{'readonly':True}" />
+				     </group>
+			</page>
+		</page>
         </field>
     </record>
+
+
+
+    <record id="view_partner_change_credit_manager" model="ir.ui.view">
+        <field name="name">Controlling the Credit Limit for Partners</field>
+        <field name="model">res.partner</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="control_credit_limit.view_partner_change_credit"/>
+        <field name="groups_id" eval="[(6, 0, [ref('sales_team.group_sale_manager')])]"/>
+        <field name="arch" type="xml">
+		<field name="check_credit_limit" position="attributes">
+			<attribute name="readonly">False</attribute>
+		</field>
+		<field name="my_credit_limit" position="attributes">
+			<attribute name="readonly">False</attribute>
+		</field>
+		<field name="my_credit_agent_change" position="attributes">
+			<attribute name="readonly">False</attribute>
+		</field>
+        </field>
+    </record>
+
+
+
+    <record id="credit_limit_sale_order_add_pending" model="ir.ui.view">
+        <field name="name">Sale Order Adding Pending</field>
+        <field name="model">sale.order</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+		<div name="button_box"  position="after">
+		<field name="need_approval" invisible="1" />
+		     <div class="oe_title" style="text-align:middle;color:red;width:100%;" attrs="{'invisible': ['|',('need_approval', '!=', True), ('state', '!=','draft' ),('state', '!=','sent' )]}">
+			<center><h1>Pending Manager's Approval</h1></center>
+                    </div>
+		</div>
+        </field>
+    </record>
+
+
+
 
 </odoo>

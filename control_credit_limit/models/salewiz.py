@@ -11,8 +11,10 @@ class SaleConfirmLimit(models.TransientModel):
 	_name='sale.control.limit.wizard'
 	sale_order = fields.Many2one('sale.order')
 	invoice_amount = fields.Float('Invoice Amount',readonly=1)
-	new_balance = fields.Float('Total Balance',readonly=1)
+	debt = fields.Float('Existing Invoiced Debts',readonly=1)
 	my_credit_limit = fields.Float('Partner Credit Limit',readonly=1)
+	new_balance = fields.Float('New Balance ',readonly=1)
+	due_not_invoiced = fields.Float('Amount Due for Sale Orders not yet Invoiced',readonly=1)
 
 	@api.multi
 	def agent_exceed_limit(self):
