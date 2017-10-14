@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': "Control Sale Orders by Credit Limit",
-    'summary': "Allows a credit limit to be set for partners",
+    'summary': "Allows a credit limit to be set for partners to control sale orders",
     'description': """
 	Approve Sale Orders Based on customers pre-set credit limit
     """, 
