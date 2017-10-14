@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import api, models,fields
-from . import mysale
+from . import mysale 
 from odoo.exceptions import UserError
 from odoo import exceptions
 import logging

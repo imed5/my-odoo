@@ -3,7 +3,7 @@
     <record model="ir.ui.view" id="my_credit_limit_wizard">
         <field name="name">Request Approval for Sale Order with Credit over Limit</field>
         <field name="model">sale.control.limit.wizard</field>
-        <field name="type">form</field>
+        <field name="type">form</field> 
         <field name="arch" type="xml">
             <form>
                 <group>

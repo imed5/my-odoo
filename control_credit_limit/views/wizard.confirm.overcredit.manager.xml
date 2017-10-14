@@ -4,7 +4,7 @@
         <field name="name">Confirming Sale Order When Credit is Over Limit</field>
         <field name="model">sale.control.limit.wizard</field>
         <field name="type">form</field>
-        <field name="arch" type="xml">
+        <field name="arch" type="xml"> 
             <form>
                 <group>
                     <span>The following customer is about or exceeded their credit limit. You need to confirm their Sale Order or Increase their Credit Limit:</span>

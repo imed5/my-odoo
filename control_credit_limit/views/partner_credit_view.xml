@@ -4,7 +4,7 @@
     <record id="view_partner_change_credit" model="ir.ui.view">
         <field name="name">Controlling the Credit Limit for Partners</field>
         <field name="model">res.partner</field>
-        <field name="type">form</field>
+        <field name="type">form</field> 
         <field name="inherit_id" ref="account.view_partner_property_form"/>
         <field name="arch" type="xml">
 		<page name="accounting" position="after">

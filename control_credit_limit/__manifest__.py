@@ -4,7 +4,7 @@
     'summary': "Allows a credit limit to be set for partners",
     'description': """
 	Approve Sale Orders Based on customers pre-set credit limit
-    """,
+    """, 
     'author': "ERPish.com",
     'website': "http://www.erpish.com",
     'category': 'Partner',
