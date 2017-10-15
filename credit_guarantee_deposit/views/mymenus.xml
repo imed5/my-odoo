@@ -1,0 +1,37 @@
+<?xml  version="1.0"?>  
+<odoo>   
+
+	<record	id="view_credit_limit_guarantee_deposit"	model="ir.ui.view">	
+		<field	name="name">Guarantee Deposits</field>	
+		<field	name="model">credit.limit.mydeposit</field>	
+		<field	name="arch"	type="xml">	
+				<tree default_order='create_date desc'>
+				    <field name="display_name" string='ID'/>
+				    <field name="partner_id"/>
+				    <field name="create_date"/>
+				    <field name="deposit_type" />
+				    <field name="deposit_desc" />
+				    <field name="deposit_state" />
+				    <field name="deposit_value" sum="Total Tax Included" widget="monetary" eval=""></field>
+				</tree>	
+		</field>	
+	</record>
+
+
+	<act_window  id="action_list_guarantee_deposits"  
+	name="Guarantee Deposits"  
+	res_model="credit.limit.mydeposit"
+	view_id="view_credit_limit_guarantee_deposit"
+	view_mode="tree,form" 
+	/> 
+
+
+	<menuitem  id="menu_credit_limit_deposit"  
+	name="List Guarantee Deposits"  
+	action="action_list_guarantee_deposits" 
+	parent="control_credit_limit.my_credit_limit_menu"
+	groups="sales_team.group_sale_manager"
+	sequence="50" />
+
+
+</odoo> 

@@ -1,0 +1,102 @@
+<?xml  version="1.0"?>  
+<odoo>   
+
+	<record	id="view_guarantee_deposit_single"	model="ir.ui.view">	
+		<field	name="name">Guarantee Deposit</field>	
+		<field	name="model">credit.limit.mydeposit</field>	
+		<field	name="arch"	type="xml">	
+				<form string ="Guarantee Deposits">
+					<header>
+
+					</header>
+					<sheet>
+					    <div class="oe_title">
+						<h1>
+						    <field name="display_name" readonly="1"/>
+						</h1>
+					    </div>
+					    <group>
+						    <field name="partner_id"/>
+						    <field name="deposit_type" />
+						    <field name="deposit_desc" />
+						    <field name="deposit_state" />
+						    <field name="deposit_value" sum="Total Tax Included" widget="monetary" eval=""></field>
+
+						    <field name="create_date" readonly="1" />
+						    <field name="create_uid" readonly="1" />
+					 </group>
+					</sheet>
+
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+
+
+				</form>	
+		</field>	
+	</record>
+
+	<record	id="view_guarantee_deposits_search"	model="ir.ui.view">	
+		<field	name="name">Guarantee Deposit</field>	
+		<field	name="model">credit.limit.mydeposit</field>	
+		<field	name="arch"	type="xml">	
+			<search>
+				<field name="partner_id" operator="child_of"/>
+				<filter name="Returned to Client"	domain="[('deposit_state','=','returned')]" />
+				<filter name="Still being kept"	domain="[('deposit_state','=','handed')]" />
+				<filter name="Seized Totally"	domain="[('deposit_state','=','seized')]" />
+			</search>	
+		</field>	
+	</record>
+
+
+        <record id="act_show_deposits_for_customers" model="ir.actions.act_window">
+            <field name="name">Guarantee Deposits</field>
+            <field name="res_model">credit.limit.mydeposit</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_partner_id': active_id}</field>
+        </record>
+
+
+        <record id="guarantee_deposit_button_partner" model="ir.ui.view">
+            <field name="name">guarantee.deposit.button.partner</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form" />
+            <field name="priority" eval="20"/>
+            <field name="groups_id" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+            <field name="arch" type="xml">
+                <div name="button_box" position="inside">
+                    <button class="oe_stat_button" type="action" name="%(act_show_deposits_for_customers)d" 
+                        attrs="{'invisible': [('customer', '=', False)]}"
+                        icon="fa-bank">
+                        <field string="Deposits" name="credit_deposit_count" widget="statinfo"/>
+                    </button>     
+                </div>
+                <page name="internal_notes" position="inside">
+                    <group colspan="2" col="2" groups="sale.group_warning_sale">
+                        <separator string="Warning on the Sales Order" colspan="4" />
+                            <field name="sale_warn" nolabel="1" />
+                            <field name="sale_warn_msg" colspan="3" nolabel="1" 
+                                    attrs="{'required':[('sale_warn','!=','no-message')],'readonly':[('sale_warn','=','no-message')]}"/>
+                    </group>
+                </page>
+            </field>
+        </record>
+
+
+    <record model="ir.ui.view" id="my_credit_limit_confirm_wizard_deposit">
+        <field name="name">Deposit within the Wizard</field>
+        <field name="model">sale.control.limit.wizard</field>
+	<field name="inherit_id" ref="control_credit_limit.my_credit_limit_confirm_wizard"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml"> 
+			<field name="my_credit_limit" position="after">
+				<field name="partner_id"  />
+				<field name="deposit_reason" domain="[('partner_id','=', partner_id)]" />	
+			</field>
+        </field>
+    </record>
+
+</odoo> 
