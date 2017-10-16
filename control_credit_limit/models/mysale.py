@@ -52,12 +52,19 @@ class MySale(models.Model):
 
 		##get some parameters
 		includenot=self.env['ir.config_parameter'].get_param('credit.limit.include.not.invoiced')
+		fresh_orders=self.env['ir.config_parameter'].get_param('credit.limit.force_limit_fresh_orders')
+
 		if includenot:
 			new_balance=new_balance+due_notinv
 
 		msg='Credit Limit Error !! You need to increase the limit of this customer to proceed \n New Balance %s \n Current Customer Balance %s \n  Limit %s \n Open Invoices %s \n Due Invoices %s ' % (new_balance, (partner.credit*(-1)), partner.my_credit_limit, all_open, all_due)
 		_logger.debug(msg)
-		if all_open>0 and new_balance>partner.my_credit_limit:
+		
+		v_fresh=True
+		if all_open==0 and not fresh_orders:
+			v_fresh=False
+
+		if v_fresh and new_balance>partner.my_credit_limit:
 			params = {'sale_order':self.id,'invoice_amount':self.amount_total,'new_balance': new_balance,'debt':partner.credit,'my_credit_limit': partner.my_credit_limit,'due_not_invoiced':due_notinv}
 		        return params		
 		else:
