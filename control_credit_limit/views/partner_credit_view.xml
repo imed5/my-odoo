@@ -10,6 +10,8 @@
 		<page name="accounting" position="after">
 			 <page string="Credit Limit" name="credit_limit">
 				<group name="Credit" String="Credit Limit Control" >
+					<field name="credit"  string="Partner Actual Credit:" readonly="True" />
+					<field name="my_credit_is_over"  string="Customer over Credit ?" readonly="True" />
 					<field name="check_credit_limit" attrs="{'readonly':True}" />
 					<field name="my_credit_limit" attrs="{'readonly':True}" />
 					<field name="my_credit_agent_change" attrs="{'readonly':True}" />
