@@ -7,7 +7,7 @@
     """, 
     'author': "ERPish.com",
     'website': "http://www.erpish.com",
-    'category': 'Sales',
+    'category': 'Sales', 
     'version': '10.0.3.1',   
     'depends': ['account','sale'],
     'data': [

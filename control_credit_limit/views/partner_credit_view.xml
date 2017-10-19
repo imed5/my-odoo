@@ -11,7 +11,7 @@
 			 <page string="Credit Limit" name="credit_limit">
 				<group name="Credit" String="Credit Limit Control" >
 					<field name="credit"  string="Partner Actual Credit:" readonly="True" />
-					<field name="my_credit_is_over"  string="Customer over Credit ?" readonly="True" />
+                                        <!--					<field name="my_credit_is_over"  string="Customer over Credit ?" readonly="True" /> -->
 					<field name="check_credit_limit" attrs="{'readonly':True}" />
 					<field name="my_credit_limit" attrs="{'readonly':True}" />
 					<field name="my_credit_agent_change" attrs="{'readonly':True}" />
@@ -30,10 +30,24 @@
         <field name="inherit_id" ref="control_credit_limit.view_partner_change_credit"/>
         <field name="groups_id" eval="[(6, 0, [ref('sales_team.group_sale_manager')])]"/>
         <field name="arch" type="xml">
+                <field name="my_credit_agent_change" attrs="{'invisible':True}" />
+		<field name="my_credit_limit" position="replace">
+			<field name="my_credit_limit" attrs="{'readonly': [('my_credit_agent_change','!=',True)] }" />
+		</field>
+        </field>
+    </record>
+    
+        <record id="view_partner_change_credit_administrator" model="ir.ui.view">
+        <field name="name">Controlling the Credit Limit for Partners</field>
+        <field name="model">res.partner</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="view_partner_change_credit"/>
+        <field name="groups_id" eval="[(6, 0, [ref('base.group_system')])]"/>
+        <field name="arch" type="xml">
 		<field name="check_credit_limit" position="attributes">
 			<attribute name="readonly">False</attribute>
 		</field>
-		<field name="my_credit_limit" position="attributes">
+                <field name="my_credit_limit" position="attributes" >
 			<attribute name="readonly">False</attribute>
 		</field>
 		<field name="my_credit_agent_change" position="attributes">
@@ -41,6 +55,7 @@
 		</field>
         </field>
     </record>
+
 
 
 
