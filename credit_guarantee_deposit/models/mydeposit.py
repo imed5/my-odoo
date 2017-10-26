@@ -26,22 +26,21 @@ class MyDeposit(models.Model):
 	display_name = fields.Char(string='Name', compute='_compute_display_name')
 	name = fields.Char(string='Name', compute='_compute_name')
 
-        @api.one
-       # @api.depends('id')
-        def _compute_display_name(self):
+	@api.one
+	# @api.depends('id')
+	def _compute_display_name(self):
 		if self.id<10:
-	        	self.display_name = 'GD00'+str(self.id)
+			self.display_name = 'GD00'+str(self.id)
 		elif self.id<100:
-	        	self.display_name = 'GD0'+str(self.id)
+			self.display_name = 'GD0'+str(self.id)
 		else:
-	        	self.display_name = 'GD'+str(self.id)
+			self.display_name = 'GD'+str(self.id)
 
-        @api.one      
-        def _compute_name(self):
+	@api.one      
+	def _compute_name(self):
 		if self.id<10:
-	        	self.name = 'GD00'+str(self.id)+' - '+self.deposit_type
+			self.name = 'GD00'+str(self.id)+' - '+self.deposit_type
 		elif self.id<100:
-	        	self.name = 'GD0'+str(self.id)+' - '+self.deposit_type
+			self.name = 'GD0'+str(self.id)+' - '+self.deposit_type
 		else:
-	        	self.name = 'GD'+str(self.id)+' - '+self.deposit_type
-   
+			self.name = 'GD'+str(self.id)+' - '+self.deposit_type

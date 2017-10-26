@@ -131,9 +131,9 @@
 
     <menuitem  id="my_credit_limit_menu"  
         name="Credit Limit"  
-        parent="sales_team.menu_base_partner"
+        parent="sale.sale_menu_root"
 	groups="sales_team.group_sale_manager"
-        sequence="5" />
+        sequence="3" />
 
     <menuitem  id="menu_list_sale_to_approve"  
         name="Sale Orders to Approve"  

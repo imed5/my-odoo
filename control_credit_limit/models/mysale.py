@@ -46,15 +46,18 @@ class MySale(models.Model):
 			all_open+=1
 			aa='\n\nInvoice %s Due %s \n\n' % (inv.display_name, due)
 
-		
-
 		new_balance=self.amount_total+partner.credit
 
+		_logger.debug('getting params...\n\n\n')
 		##get some parameters
-		includenot=self.env['ir.config_parameter'].get_param('credit.limit.include.not.invoiced')
-		fresh_orders=self.env['ir.config_parameter'].get_param('credit.limit.force_limit_fresh_orders')
-
+		includenot=self.env['ir.config_parameter'].sudo().get_param('credit.limit.include.not.invoiced')
+		fresh_orders=self.env['ir.config_parameter'].sudo().get_param('credit.limit.force_limit_fresh_orders')
+		_logger.debug('done...\n\n\n')		
+		
+		_logger.debug('\n\n\t PARAMS INC'+str(includenot)+'  ==== FRESH'+str(fresh_orders)+'\n\n')
+		
 		if includenot:
+			_logger.debug('\n\n\tINCLUDED NOT\n\n')
 			new_balance=new_balance+due_notinv
 
 		msg='Credit Limit Error !! You need to increase the limit of this customer to proceed \n New Balance %s \n Current Customer Balance %s \n  Limit %s \n Open Invoices %s \n Due Invoices %s ' % (new_balance, (partner.credit*(-1)), partner.my_credit_limit, all_open, all_due)
@@ -66,12 +69,10 @@ class MySale(models.Model):
 
 		if v_fresh and new_balance>partner.my_credit_limit:
 			params = {'sale_order':self.id,'invoice_amount':self.amount_total,'new_balance': new_balance,'debt':partner.credit,'my_credit_limit': partner.my_credit_limit,'due_not_invoiced':due_notinv}
-		        return params		
+			return params
 		else:
+			_logger.debug('\n\n Showing HERE \n\n'+str(v_fresh))
 			return 1
-
-
-
 	@api.multi
 	def action_confirm(self):
 		_logger.debug(' \n\n \t Calling Action Confirm for a child\n\n\n')		

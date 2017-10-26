@@ -8,7 +8,7 @@
     'author': "ERPish.com",
     'website': "http://www.erpish.com",
     'category': 'Sales',
-    'version': '10.0.1.3',   
+    'version': '11.0.1.1',   
     'depends': ['control_credit_limit','account','sale'],
     'data': [
 	'security/ir.model.access.csv',

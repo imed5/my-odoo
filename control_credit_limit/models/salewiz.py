@@ -23,7 +23,7 @@ class SaleConfirmLimit(models.TransientModel):
 		group = self.env.ref('sales_team.group_sale_manager')
 		for myu in group.users:
 			self.sale_order.message_subscribe([myu.partner_id.id])            		
-                self.sale_order.message_post('Order Approval is requested for a customer with Credit Limit issue', subject='Order Approval is requested for a customer with Credit Limit issue',subtype='mail.mt_comment',type='comment')
+			self.sale_order.message_post('Order Approval is requested for a customer with Credit Limit issue', subject='Order Approval is requested for a customer with Credit Limit issue',subtype='mail.mt_comment',type='comment')
 
 	@api.multi
 	def exceed_limit_approve(self):

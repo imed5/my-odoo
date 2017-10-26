@@ -12,41 +12,36 @@ class CreditPartner(models.Model):
 	my_credit_agent_change = fields.Boolean('Allow Sale Managers to modify this limit ?', default=True)
 	my_credit_is_over = fields.Boolean('is over credit ?', compute='compute_my_credit_is_over')
 	over_limit = fields.Float('Debt over Limit', compute='compute_over_limit', search='search_over_limit')
-
-
 #	@api.onchange('my_credit_limit', 'credit')
 #	def check_credit_over(self):
 #		if self.my_credit_limit<self.credit:
 #			self.my_credit_is_over=True
 #		else:
 #			self.my_credit_is_over=False
-
-
-
-   	def search_over_limit(self, operation, operand):
+	def search_over_limit(self, operation, operand):
 		_logger.debug(' \n\n \t Having a shitty time here  \n\n\n'+str(self.display_name)+'\n\n\n')
-                acc_type='receivable'
-	       #if operator not in ('<', '=', '>', '>=', '<='):
-		    #return []
+		acc_type='receivable'
+		   #if operator not in ('<', '=', '>', '>=', '<='):
+			#return []
 		#if type(operand) not in (float, int):
-		    #return []
+			#return []
 		#sign = 1
 		#if account_type == 'payable':
-		    #sign = -1
+			#sign = -1
 		res = self._cr.execute('''
-		    SELECT partner.id, SUM(aml.amount_residual),my_credit_limit
-		    FROM res_partner partner
-		    LEFT JOIN account_move_line aml ON aml.partner_id = partner.id
-		    RIGHT JOIN account_account acc ON aml.account_id = acc.id
-		    WHERE acc.internal_type = 'receivable' 
-		      AND NOT acc.deprecated
-		    GROUP BY partner.id
-		    HAVING  COALESCE(SUM(aml.amount_residual), 0) > partner.my_credit_limit ''' )
+			SELECT partner.id, SUM(aml.amount_residual),my_credit_limit
+			FROM res_partner partner
+			LEFT JOIN account_move_line aml ON aml.partner_id = partner.id
+			RIGHT JOIN account_account acc ON aml.account_id = acc.id
+			WHERE acc.internal_type = 'receivable' 
+			  AND NOT acc.deprecated
+			GROUP BY partner.id
+			HAVING  COALESCE(SUM(aml.amount_residual), 0) > partner.my_credit_limit ''' )
 		res = self._cr.fetchall()
 		for row in res:
-                    _logger.debug(' \n\n \t '+str(row))
+					_logger.debug(' \n\n \t '+str(row))
 		if not res:
-		    return [('id', '=', '0')]
+			return [('id', '=', '0')]
 		return [('id', 'in', map(itemgetter(0), res))]
 
 
