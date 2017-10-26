@@ -38,12 +38,15 @@ class CreditPartner(models.Model):
 			GROUP BY partner.id
 			HAVING  COALESCE(SUM(aml.amount_residual), 0) > partner.my_credit_limit ''' )
 		res = self._cr.fetchall()
+		dd=[]
 		for row in res:
 					_logger.debug(' \n\n \t '+str(row))
+					dd.append(row[0])
 		if not res:
 			return [('id', '=', '0')]
-		return [('id', 'in', map(itemgetter(0), res))]
-
+		_logger.debug(' \n\n HITMAN : \t '+str(dd))
+		#return [('id', 'in', map(itemgetter(0), res))]
+		return [('id' ,  'in' , dd)]
 
 	@api.depends('credit','debit', 'my_credit_limit')
 	@api.multi
