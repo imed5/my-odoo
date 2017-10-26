@@ -8,7 +8,7 @@
     'author': "ERPish.com",
     'website': "http://www.erpish.com",
     'category': 'Sales', 
-    'version': '10.0.3.2',   
+    'version': '11.0.1.1',   
     'depends': ['account','sale'],
     'data': [
         'views/partner_credit_view.xml',
