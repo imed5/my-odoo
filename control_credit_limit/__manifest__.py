@@ -9,7 +9,7 @@
     'website': "http://www.erpish.com",
     'category': 'Sales', 
     'version': '11.0.1.1',   
-    'depends': ['account','sale'],
+    'depends': ['sale','account'],
     'data': [
         'views/partner_credit_view.xml',
         'views/wizard.confirm.overcredit.xml',

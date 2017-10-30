@@ -8,14 +8,18 @@
         <field name="inherit_id" ref="account.view_partner_property_form"/>
         <field name="arch" type="xml">
 		<page name="accounting" position="after">
-			 <page string="Credit Limit" name="credit_limit">
-				<group name="Credit" String="Credit Limit Control" >
-					<field name="credit"  string="Partner Actual Credit:" readonly="True" />
-                                        <!--					<field name="my_credit_is_over"  string="Customer over Credit ?" readonly="True" /> -->
-					<field name="check_credit_limit" attrs="{'readonly':True}" />
-					<field name="my_credit_limit" attrs="{'readonly':True}" />
-					<field name="my_credit_agent_change" attrs="{'readonly':True}" />
-				     </group>
+			 <page string="Credit Limit" name="credit_limit">				 
+				<group>
+						
+				</group>
+				<group>
+						<group string="Sale Orders" name="credit_limit_so">						
+							<field name="my_credit_limit" attrs="{'readonly':True}" />
+							<field name="check_credit_limit" attrs="{'readonly':True}" />						
+							<field name="my_credit_agent_change" attrs="{'readonly':True}" />
+							<field name="credit"  string="Accounting Credit:" readonly="True" />
+						</group>				
+				</group>
 			</page>
 		</page>
         </field>
